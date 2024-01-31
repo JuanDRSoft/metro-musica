@@ -43,13 +43,23 @@ const ArtistCard = ({ data }) => {
         </div>
 
         <div className="w-full text-center">
-          <a href={`//${urlSpotify}`} target="_blank">
+          <a
+            href={`${
+              urlSpotify.includes("https") ? urlSpotify : `//${urlSpotify}`
+            }`}
+            target="_blank"
+          >
             <i class="fab fa-spotify text-green-500"></i> {urlSpotify}
           </a>
         </div>
 
         <div className="w-full text-center">
-          <a href={`//${urlYoutube}`} target="_blank">
+          <a
+            href={`${
+              urlYoutube.includes("https") ? urlYoutube : `//${urlYoutube}`
+            }`}
+            target="_blank"
+          >
             <i class="fab fa-youtube  text-red-500"></i> {urlYoutube}
           </a>
         </div>
