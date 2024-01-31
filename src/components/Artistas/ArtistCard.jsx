@@ -29,22 +29,28 @@ const ArtistCard = ({ data }) => {
         </div>
 
         <div className="w-full text-center">
-          <p>{countrie}</p>
+          <p>
+            <i class="fas fa-map-marker-alt mr-1 text-red-500"></i>
+            {countrie}
+          </p>
         </div>
 
         <div className="w-full text-center">
-          <p>{genere}</p>
+          <p>
+            <i class="fas fa-music mr-1 text-blue-500"></i>
+            {genere}
+          </p>
         </div>
 
         <div className="w-full text-center">
           <a href={`//${urlSpotify}`} target="_blank">
-            {urlSpotify}
+            <i class="fab fa-spotify text-green-500"></i> {urlSpotify}
           </a>
         </div>
 
         <div className="w-full text-center">
           <a href={`//${urlYoutube}`} target="_blank">
-            {urlYoutube}
+            <i class="fab fa-youtube  text-red-500"></i> {urlYoutube}
           </a>
         </div>
       </div>
