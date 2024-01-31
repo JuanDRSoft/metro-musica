@@ -10,6 +10,9 @@ const AuthProvider = ({ children }) => {
   const [cargando, setCargando] = useState(true);
   const [authUser, setAuthUser] = useState({});
   const [usuarioData, setUsuarioData] = useState({});
+
+  const [artist, setArtist] = useState([]);
+
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -22,6 +25,20 @@ const AuthProvider = ({ children }) => {
         navigate("/");
       }
     });
+  }, []);
+
+  useEffect(() => {
+    db.collection("artist").onSnapshot(manejarSnapshot);
+
+    function manejarSnapshot(snapshot) {
+      let platillos = snapshot.docs.map((doc) => {
+        return {
+          id: doc.id,
+          ...doc.data(),
+        };
+      });
+      setArtist(platillos);
+    }
   }, []);
 
   // useEffect(() => {
@@ -69,9 +86,63 @@ const AuthProvider = ({ children }) => {
       });
   };
 
+  const handleArtist = (body, initial, id) => {
+    if (id) {
+      editArtist(body, initial, id);
+    } else {
+      createArtist(body, initial);
+    }
+  };
+
+  const createArtist = (body, initial) => {
+    db.collection("artist")
+      .doc()
+      .set(body)
+      .then(() => {
+        toast.success("Artista Creado correctamente");
+        initial();
+      })
+      .catch(() => {
+        toast.error("Ocurrio un error no se pudo crear el artista");
+      });
+  };
+
+  const editArtist = (body, initial, id) => {
+    db.collection("artist")
+      .doc(id)
+      .update(body)
+      .then(() => {
+        toast.success("Datos de Artista modificados correctamente");
+        initial();
+      })
+      .catch(() => {
+        toast.error("Ocurrio un error no se pudo modificar el artista");
+      });
+  };
+
+  const deleteArtist = (id) => {
+    db.collection("artist")
+      .doc(id)
+      .delete()
+      .then(() => {
+        toast.success("Artista eliminado correctamente");
+      })
+      .catch(() => {
+        toast.error("Ocurrio un error no se pudo modificar el artista");
+      });
+  };
+
   return (
     <AuthContext.Provider
-      value={{ cargando, cerrarSesionAuth, authUser, usuarioData }}
+      value={{
+        cargando,
+        cerrarSesionAuth,
+        authUser,
+        usuarioData,
+        handleArtist,
+        artist,
+        deleteArtist,
+      }}
     >
       {children}
     </AuthContext.Provider>

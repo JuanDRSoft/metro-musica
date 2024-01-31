@@ -3,7 +3,7 @@ import Login from "./pages/Login";
 import HomeLayout from "./layout/HomeLayout";
 import Home from "./pages/Home";
 import { AuthProvider } from "./context/AuthProvider";
-import Clientes from "./pages/Clientes";
+import Artistas from "./pages/Artistas";
 
 function App() {
   return (
@@ -14,7 +14,7 @@ function App() {
 
           <Route path="/app" element={<HomeLayout />}>
             <Route index element={<Home />} />
-            <Route path="/app/clientes" element={<Clientes />} />
+            <Route path="/app/artistas" element={<Artistas />} />
           </Route>
         </Routes>
       </AuthProvider>

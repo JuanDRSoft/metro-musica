@@ -1,12 +1,12 @@
 export const menuPrincipal = [
   {
-    name: "Principal",
+    name: "Inicio",
     url: "/app",
-    id: "app",
+    icon: <i class="fas fa-home"></i>,
   },
   {
-    name: "Clientes",
-    url: "/app/clientes",
-    id: "clientes",
+    name: "Artistas",
+    url: "/app/artistas",
+    icon: <i class="fas fa-music"></i>,
   },
 ];

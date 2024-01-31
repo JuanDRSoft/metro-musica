@@ -10,7 +10,7 @@ const HomeLayout = () => {
 
   return (
     <div className="flex">
-      <div className="w-1/6 bg-[#343434] h-screen relative">
+      <div className="w-[300px] bg-[#343434] h-screen relative">
         <div className="p-10">
           <img src={Logo} />
         </div>
@@ -21,9 +21,9 @@ const HomeLayout = () => {
               to={e.url}
               className={`text-white ${
                 e.url == location && "bg-red-500"
-              } p-1 text-xl font-bold text-center hover:bg-gray-600 w-full rounded-r-xl`}
+              } p-1 text-xl font-bold hover:bg-gray-600 w-full rounded-r-xl flex items-baseline gap-5 pl-5`}
             >
-              {e.name}
+              {e.icon} {e.name}
             </Link>
           ))}
         </div>
@@ -33,14 +33,14 @@ const HomeLayout = () => {
             onClick={cerrarSesionAuth}
             className="p-1 text-white text-xl font-bold text-center hover:bg-gray-600 w-full rounded-r-xl"
           >
-            Cerrar Sesión
+            <i class="fas fa-sign-out-alt"></i> Cerrar Sesión
           </button>
         </div>
       </div>
 
       <div className="w-full">
-        <div className="bg-[#343434e5] p-5 w-full"></div>
-        <div className="p-5">
+        <div className="bg-[#343434e5] p-5 w-full h-[7vh]"></div>
+        <div className="p-10 h-[93vh] bg-gray-50">
           <Outlet />
         </div>
       </div>
