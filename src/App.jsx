@@ -4,6 +4,7 @@ import HomeLayout from "./layout/HomeLayout";
 import Home from "./pages/Home";
 import { AuthProvider } from "./context/AuthProvider";
 import Artistas from "./pages/Artistas";
+import Generos from "./pages/Generos";
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
           <Route path="/app" element={<HomeLayout />}>
             <Route index element={<Home />} />
             <Route path="/app/artistas" element={<Artistas />} />
+            <Route path="/app/generos" element={<Generos />} />
           </Route>
         </Routes>
       </AuthProvider>

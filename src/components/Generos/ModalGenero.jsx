@@ -3,25 +3,17 @@ import { Fragment, useEffect, useState } from "react";
 import useAuth from "../../hooks/useAuth";
 import { toast } from "react-toastify";
 
-const ModalArtista = ({ data, openModal1, setOpenModal }) => {
+const ModalGenero = ({ data, openModal1, setOpenModal }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [id, setId] = useState();
   const [name, setName] = useState("");
-  const [countrie, setCountrie] = useState("");
-  const [genere, setGenere] = useState("");
-  const [urlYoutube, setUrlYoutube] = useState("");
-  const [urlSpotify, setUrlSpotify] = useState("");
 
-  const { handleArtist, generos, countries } = useAuth();
+  const { handleGenero } = useAuth();
 
   useEffect(() => {
     if (data?.id) {
       setId(data.id);
       setName(data.name);
-      setCountrie(data.countrie);
-      setGenere(data.genere);
-      setUrlYoutube(data.urlYoutube);
-      setUrlSpotify(data.urlSpotify);
     }
   }, [data]);
 
@@ -42,30 +34,22 @@ const ModalArtista = ({ data, openModal1, setOpenModal }) => {
   const initial = () => {
     setId("");
     setName("");
-    setCountrie("");
-    setGenere("");
-    setUrlYoutube("");
-    setUrlSpotify("");
     closeModal();
   };
 
   const onSubmit = async (e) => {
     e.preventDefault();
 
-    if ([name, countrie, genere, urlYoutube, urlSpotify].includes("")) {
+    if ([name].includes("")) {
       toast.warning("Llena todos los campos");
       return;
     }
 
     const body = {
       name,
-      countrie,
-      genere,
-      urlSpotify,
-      urlYoutube,
     };
 
-    handleArtist(body, initial, id);
+    handleGenero(body, initial, id);
   };
 
   return (
@@ -77,7 +61,7 @@ const ModalArtista = ({ data, openModal1, setOpenModal }) => {
             onClick={openModal}
             className="rounded-md bg-red-500 p-2 px-5 font-medium text-white"
           >
-            Crear Artista
+            Crear Genero
           </button>
         </div>
       )}
@@ -112,7 +96,7 @@ const ModalArtista = ({ data, openModal1, setOpenModal }) => {
                     as="h3"
                     className="text-xl font-medium text-center leading-6 text-gray-900"
                   >
-                    {data?.name ? "Editar Artista" : "Crear Artista"}
+                    {data?.name ? "Editar Genero" : "Crear Genero"}
                   </Dialog.Title>
                   <form className="mt-5" onSubmit={onSubmit}>
                     <label>Nombre</label>
@@ -120,44 +104,6 @@ const ModalArtista = ({ data, openModal1, setOpenModal }) => {
                       className="p-1 border rounded-xl w-full mb-3 mt-1 pl-3"
                       value={name}
                       onChange={(e) => setName(e.target.value)}
-                    />
-
-                    <label>País</label>
-                    <select
-                      className="p-1 border rounded-xl w-full mb-3 mt-1 pl-3"
-                      value={countrie}
-                      onChange={(e) => setCountrie(e.target.value)}
-                    >
-                      <option value="">Selecciona un país</option>
-                      {countries.map((e) => (
-                        <option>{e.translations.spa.common}</option>
-                      ))}
-                    </select>
-
-                    <label>Géneros Musicales</label>
-                    <select
-                      className="p-1 border rounded-xl w-full mb-3 mt-1 pl-3"
-                      value={genere}
-                      onChange={(e) => setGenere(e.target.value)}
-                    >
-                      <option value="">Selecciona un genero</option>
-                      {generos.map((e) => (
-                        <option>{e.name}</option>
-                      ))}
-                    </select>
-
-                    <label>Url YouTube</label>
-                    <input
-                      className="p-1 border rounded-xl w-full mb-3 mt-1 pl-3"
-                      value={urlYoutube}
-                      onChange={(e) => setUrlYoutube(e.target.value)}
-                    />
-
-                    <label>Url Spotify</label>
-                    <input
-                      className="p-1 border rounded-xl w-full mb-3 mt-1 pl-3"
-                      value={urlSpotify}
-                      onChange={(e) => setUrlSpotify(e.target.value)}
                     />
 
                     <div className="mt-4 flex justify-center">
@@ -179,4 +125,4 @@ const ModalArtista = ({ data, openModal1, setOpenModal }) => {
   );
 };
 
-export default ModalArtista;
+export default ModalGenero;

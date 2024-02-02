@@ -12,6 +12,8 @@ const AuthProvider = ({ children }) => {
   const [usuarioData, setUsuarioData] = useState({});
 
   const [artist, setArtist] = useState([]);
+  const [generos, setGeneros] = useState([]);
+  const [countries, setCountries] = useState([]);
 
   const navigate = useNavigate();
 
@@ -38,6 +40,26 @@ const AuthProvider = ({ children }) => {
         };
       });
       setArtist(platillos);
+    }
+
+    db.collection("generos").onSnapshot(manejarSnapshotGenero);
+
+    function manejarSnapshotGenero(snapshot) {
+      let platillos = snapshot.docs.map((doc) => {
+        return {
+          id: doc.id,
+          ...doc.data(),
+        };
+      });
+      setGeneros(platillos);
+
+      fetch("https://restcountries.com/v3.1/all")
+        .then((response) => response.json())
+        .then((data) => {
+          console.log(data);
+          setCountries(data);
+        })
+        .catch((error) => console.error("Error:", error));
     }
   }, []);
 
@@ -132,6 +154,52 @@ const AuthProvider = ({ children }) => {
       });
   };
 
+  const handleGenero = (body, initial, id) => {
+    if (id) {
+      editGenero(body, initial, id);
+    } else {
+      createGenero(body, initial);
+    }
+  };
+
+  const createGenero = (body, initial) => {
+    db.collection("generos")
+      .doc()
+      .set(body)
+      .then(() => {
+        toast.success("Genero creado correctamente");
+        initial();
+      })
+      .catch(() => {
+        toast.error("Ocurrio un error no se pudo crear el genero");
+      });
+  };
+
+  const editGenero = (body, initial, id) => {
+    db.collection("generos")
+      .doc(id)
+      .update(body)
+      .then(() => {
+        toast.success("Datos de genero modificados correctamente");
+        initial();
+      })
+      .catch(() => {
+        toast.error("Ocurrio un error no se pudo modificar el genero");
+      });
+  };
+
+  const deleteGenero = (id) => {
+    db.collection("generos")
+      .doc(id)
+      .delete()
+      .then(() => {
+        toast.success("genero eliminado correctamente");
+      })
+      .catch(() => {
+        toast.error("Ocurrio un error no se pudo modificar el genero");
+      });
+  };
+
   return (
     <AuthContext.Provider
       value={{
@@ -142,6 +210,10 @@ const AuthProvider = ({ children }) => {
         handleArtist,
         artist,
         deleteArtist,
+        handleGenero,
+        deleteGenero,
+        generos,
+        countries,
       }}
     >
       {children}
