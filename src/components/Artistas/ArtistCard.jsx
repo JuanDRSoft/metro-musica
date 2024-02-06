@@ -6,7 +6,8 @@ import useAuth from "../../hooks/useAuth";
 const ArtistCard = ({ data }) => {
   const [openModal, setOpenModal] = useState(false);
 
-  const { name, genere, urlSpotify, urlYoutube, countrie } = data;
+  const { name, genere, urlSpotify, urlYoutube, countrie, image, chanelImage } =
+    data;
   const { deleteArtist } = useAuth();
 
   const edit = () => {
@@ -25,24 +26,30 @@ const ArtistCard = ({ data }) => {
 
       <div className="p-3 flex items-center">
         <div className="w-full">
-          <i class="fas fa-user-circle text-5xl"></i>
+          {image ? (
+            <div className="w-12 h-12 rounded-full overflow-hidden flex items-center justify-center">
+              <img src={image} />
+            </div>
+          ) : (
+            <i class="fas fa-user-circle text-5xl"></i>
+          )}
         </div>
 
-        <div className="w-full text-center">
+        <div className="w-full">
           <p>
             <i class="fas fa-map-marker-alt mr-1 text-red-500"></i>
             {countrie}
           </p>
         </div>
 
-        <div className="w-full text-center">
+        <div className="w-full">
           <p>
             <i class="fas fa-music mr-1 text-blue-500"></i>
             {genere}
           </p>
         </div>
 
-        <div className="w-full text-center">
+        <div className="w-full">
           <a
             href={`${
               urlSpotify.includes("https") ? urlSpotify : `//${urlSpotify}`
@@ -53,14 +60,23 @@ const ArtistCard = ({ data }) => {
           </a>
         </div>
 
-        <div className="w-full text-center">
+        <div className="w-full">
           <a
             href={`${
               urlYoutube.includes("https") ? urlYoutube : `//${urlYoutube}`
             }`}
             target="_blank"
+            className="flex items-center gap-2"
           >
-            <i class="fab fa-youtube  text-red-500"></i> {urlYoutube}
+            <i class="fab fa-youtube  text-red-500"></i>
+
+            {urlYoutube}
+
+            {chanelImage && (
+              <div className="w-8 h-8 rounded-full overflow-hidden flex items-center justify-center">
+                <img src={chanelImage} />
+              </div>
+            )}
           </a>
         </div>
       </div>

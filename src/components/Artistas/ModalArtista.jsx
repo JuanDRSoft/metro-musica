@@ -2,6 +2,8 @@ import { Dialog, Transition } from "@headlessui/react";
 import { Fragment, useEffect, useState } from "react";
 import useAuth from "../../hooks/useAuth";
 import { toast } from "react-toastify";
+import SelectImage from "../../utils/SelectImage";
+import axios from "axios";
 
 const ModalArtista = ({ data, openModal1, setOpenModal }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -11,8 +13,83 @@ const ModalArtista = ({ data, openModal1, setOpenModal }) => {
   const [genere, setGenere] = useState("");
   const [urlYoutube, setUrlYoutube] = useState("");
   const [urlSpotify, setUrlSpotify] = useState("");
+  const [image, setImage] = useState("");
+  const [chanelImage, setChanelImage] = useState("");
 
   const { handleArtist, generos, countries } = useAuth();
+  useEffect(() => {
+    function extractUsernameFromUrl(url) {
+      const usernameRegex =
+        /(?:https?:\/\/)?(?:www\.)?youtube\.com\/@([^\/?]+)/i;
+      const usernameMatch = url.match(usernameRegex);
+      return usernameMatch ? usernameMatch[1] : null;
+    }
+
+    function extractId(url) {
+      const channelRegex =
+        /(?:https?:\/\/)?(?:www\.)?youtube\.com\/channel\/([^\/\n\s]+)/i;
+      const channelMatch = url.match(channelRegex);
+      return channelMatch ? channelMatch[1] : null;
+    }
+    if (urlYoutube) {
+      const username = extractUsernameFromUrl(urlYoutube);
+      const id = extractId(urlYoutube);
+      const apiKey = "AIzaSyC7XUuqDaZaEVzTQt1D3A9d0VBjdSVZSd4";
+
+      if (username) {
+        const fetchData = async () => {
+          try {
+            // Realiza la solicitud a la API de YouTube
+            const response = await axios.get(
+              `https://www.googleapis.com/youtube/v3/search?part=id,snippet&maxResults=1&type=channel&q=@${username}&key=${apiKey}`
+            );
+
+            // Actualiza el estado con los datos del video
+            const data = response?.data.items[0].snippet.channelId;
+            // setCanalData(response?.data.items[0]);
+
+            const response2 = await axios.get(
+              `https://www.googleapis.com/youtube/v3/channels?part=snippet,contentDetails,statistics&id=${data}&key=${apiKey}`
+            );
+
+            // setCanalData(response2?.data.items[0]);
+            // setYoutubeData(response2?.data.items[0]);
+            setChanelImage(
+              response2?.data.items[0].snippet.thumbnails.default.url
+            );
+            console.log(response2);
+          } catch (error) {
+            console.error("Error al obtener datos del video:", error);
+          }
+        };
+
+        fetchData();
+      } else if (id) {
+        const fetchData = async () => {
+          try {
+            // Realiza la solicitud a la API de YouTube
+            const response = await axios.get(
+              `https://www.googleapis.com/youtube/v3/channels?part=snippet,contentDetails,statistics&id=${id}&key=${apiKey}`
+            );
+
+            // Actualiza el estado con los datos del video
+            setChanelImage(
+              response?.data.items[0].snippet.thumbnails.default.url
+            );
+            console.log(response?.data.items[0]);
+            // setCanalData(response?.data.items[0]);
+            // setYoutubeData(response2?.data.items[0]);
+          } catch (error) {
+            console.error("Error al obtener datos del video:", error);
+          }
+        };
+
+        fetchData();
+      } else if (urlYoutube == "") {
+        setUrlYoutube(null);
+      }
+    }
+  }, [urlYoutube]);
 
   useEffect(() => {
     if (data?.id) {
@@ -63,6 +140,8 @@ const ModalArtista = ({ data, openModal1, setOpenModal }) => {
       genere,
       urlSpotify,
       urlYoutube,
+      image,
+      chanelImage,
     };
 
     handleArtist(body, initial, id);
@@ -115,6 +194,14 @@ const ModalArtista = ({ data, openModal1, setOpenModal }) => {
                     {data?.name ? "Editar Artista" : "Crear Artista"}
                   </Dialog.Title>
                   <form className="mt-5" onSubmit={onSubmit}>
+                    <div className="flex justify-center mb-3">
+                      <SelectImage
+                        image={image}
+                        setImage={setImage}
+                        album={"artistas"}
+                      />
+                    </div>
+
                     <label>Nombre</label>
                     <input
                       className="p-1 border rounded-xl w-full mb-3 mt-1 pl-3"
@@ -147,11 +234,21 @@ const ModalArtista = ({ data, openModal1, setOpenModal }) => {
                     </select>
 
                     <label>Url YouTube</label>
-                    <input
-                      className="p-1 border rounded-xl w-full mb-3 mt-1 pl-3"
-                      value={urlYoutube}
-                      onChange={(e) => setUrlYoutube(e.target.value)}
-                    />
+                    {
+                      <div className="flex items-center gap-5">
+                        <input
+                          className="p-1 border rounded-xl w-full mb-3 mt-1 pl-3"
+                          value={urlYoutube}
+                          onChange={(e) => setUrlYoutube(e.target.value)}
+                        />
+
+                        {chanelImage && (
+                          <div className="rounded-full overflow-hidden border w-14 h-12">
+                            <img src={chanelImage} className="w-full h-full" />
+                          </div>
+                        )}
+                      </div>
+                    }
 
                     <label>Url Spotify</label>
                     <input
