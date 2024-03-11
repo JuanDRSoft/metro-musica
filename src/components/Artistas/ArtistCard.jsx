@@ -2,9 +2,11 @@ import React, { useState } from 'react'
 import MenuArtist from './MenuArtist'
 import ModalArtista from './ModalArtista'
 import useAuth from '../../hooks/useAuth'
+import ModalMetrics from './ModalMetrics'
 
 const ArtistCard = ({ data }) => {
   const [openModal, setOpenModal] = useState(false)
+  const [openModalMetrics, setOpenModalMetrics] = useState(false)
 
   const { name, genere, urlSpotify, urlYoutube, countrie, image, chanelImage } = data
   const { deleteArtist } = useAuth()
@@ -16,11 +18,15 @@ const ArtistCard = ({ data }) => {
     deleteArtist(data.id)
   }
 
+  const toggleOpenMetrics = () => {
+    setOpenModalMetrics(!openModalMetrics)
+  }
+
   return (
     <div className="bg-white shadow mt-3  rounded-xl">
       <div className="bg-gray-300 rounded-t-xl p-1 px-3 flex justify-between">
         <h1 className="font-medium">{name}</h1>
-        <MenuArtist edit={edit} ondelete={ondelete} data={data} />
+        <MenuArtist edit={edit} ondelete={ondelete} data={data} openMetrics={toggleOpenMetrics} />
       </div>
 
       <div className="p-3 flex items-center">
@@ -81,6 +87,7 @@ const ArtistCard = ({ data }) => {
       </div>
 
       <ModalArtista data={data} openModal1={openModal} setOpenModal={setOpenModal} />
+      <ModalMetrics isOpen={openModalMetrics} closeModal={toggleOpenMetrics} />
     </div>
   )
 }

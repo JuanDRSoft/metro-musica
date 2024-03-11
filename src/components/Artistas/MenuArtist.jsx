@@ -1,7 +1,7 @@
-import { Menu, Transition } from "@headlessui/react";
-import { Fragment, useEffect, useRef, useState } from "react";
+import { Menu, Transition } from '@headlessui/react'
+import { Fragment, useEffect, useRef, useState } from 'react'
 
-const MenuArtist = ({ edit, ondelete }) => {
+const MenuArtist = ({ edit, ondelete, openMetrics }) => {
   return (
     <div className="top-16 text-right">
       <Menu as="div" className="relative inline-block text-left">
@@ -24,9 +24,22 @@ const MenuArtist = ({ edit, ondelete }) => {
               <Menu.Item>
                 {({ active }) => (
                   <button
+                    onClick={openMetrics}
+                    className={`${
+                      active ? 'bg-red-500 text-white' : 'text-gray-900'
+                    } group flex w-full items-center rounded-md px-2 py-2 text-sm gap-3`}
+                  >
+                    <i class="fas fa-chart-line"></i>
+                    Metricas
+                  </button>
+                )}
+              </Menu.Item>
+              <Menu.Item>
+                {({ active }) => (
+                  <button
                     onClick={edit}
                     className={`${
-                      active ? "bg-red-500 text-white" : "text-gray-900"
+                      active ? 'bg-red-500 text-white' : 'text-gray-900'
                     } group flex w-full items-center rounded-md px-2 py-2 text-sm gap-3`}
                   >
                     <i class="fas fa-edit"></i>
@@ -39,7 +52,7 @@ const MenuArtist = ({ edit, ondelete }) => {
                   <button
                     onClick={ondelete}
                     className={`${
-                      active ? "bg-red-500 text-white" : "text-gray-900"
+                      active ? 'bg-red-500 text-white' : 'text-gray-900'
                     } group flex w-full items-center rounded-md px-2 py-2 text-sm gap-3`}
                   >
                     <i class="fas fa-trash-alt"></i>
@@ -52,7 +65,7 @@ const MenuArtist = ({ edit, ondelete }) => {
         </Transition>
       </Menu>
     </div>
-  );
-};
+  )
+}
 
-export default MenuArtist;
+export default MenuArtist
