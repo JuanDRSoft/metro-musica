@@ -1,16 +1,16 @@
-import React from "react";
-import Logo from "/logo metromusica.svg";
-import { menuPrincipal } from "../Data/Menu";
-import { Link, Outlet, useLocation } from "react-router-dom";
-import useAuth from "../hooks/useAuth";
+import React from 'react'
+import Logo from '/logo metromusica.svg'
+import { menuPrincipal } from '../Data/Menu'
+import { Link, Outlet, useLocation } from 'react-router-dom'
+import useAuth from '../hooks/useAuth'
 
 const HomeLayout = () => {
-  const location = useLocation().pathname;
-  const { cerrarSesionAuth } = useAuth();
+  const location = useLocation().pathname
+  const { cerrarSesionAuth } = useAuth()
 
   const openSubMenu = (id) => {
-    document.getElementById(id).classList.toggle("hidden");
-  };
+    document.getElementById(id).classList.toggle('hidden')
+  }
 
   return (
     <div className="flex">
@@ -26,7 +26,7 @@ const HomeLayout = () => {
               onMouseEnter={() => e.id && openSubMenu(e.id)}
               onMouseLeave={() => e.id && openSubMenu(e.id)}
               className={`text-white relative ${
-                e.url == location && "bg-red-500"
+                e.url == location && 'bg-red-500'
               } p-1 text-xl font-bold hover:bg-gray-600 w-full rounded-r-xl flex items-baseline gap-5 pl-5`}
             >
               {e.icon} {e.name}
@@ -58,12 +58,12 @@ const HomeLayout = () => {
 
       <div className="w-full">
         <div className="bg-[#343434e5] p-5 w-full h-[7vh]"></div>
-        <div className="p-10 h-[93vh] bg-gray-50">
+        <div className="p-10 h-[93vh] bg-gray-50 overflow-scroll">
           <Outlet />
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default HomeLayout;
+export default HomeLayout

@@ -1,8 +1,10 @@
 import React, { useState } from 'react'
 import { toast } from 'react-toastify'
+import Autotoggle from './Autotoggle'
 
 const DynamicFilter = ({ data, options, setFilter, filter }) => {
   const [state, setState] = useState()
+  const [selected, setSelected] = useState()
 
   const onSearch = () => {
     if (!state) {
@@ -39,11 +41,20 @@ const DynamicFilter = ({ data, options, setFilter, filter }) => {
                     <option value={e.value}>{e.label}</option>
                   ))}
                 </select>
+              ) : value.type == 'autotoggle' ? (
+                <Autotoggle
+                  state={selected}
+                  onChange={(e) => {
+                    setState({ ...state, [value.value]: e.value }), setSelected(e.value)
+                  }}
+                  options={value.options}
+                />
               ) : (
                 <input
-                  value={state ? state[value.value] : ''}
                   type={value.type}
-                  onChange={(e) => setState({ ...state, [value.value]: e.target.value })}
+                  onChange={(e) => {
+                    setState({ ...state, [value.value]: e.target.value })
+                  }}
                   className="w-full border border-red-500 p-1 rounded-xl px-2"
                 />
               )}
@@ -66,6 +77,7 @@ const DynamicFilter = ({ data, options, setFilter, filter }) => {
             onClick={() => {
               setFilter()
               setState()
+              setSelected('')
             }}
           >
             Reestablecer filtro

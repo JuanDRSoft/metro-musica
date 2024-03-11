@@ -21,7 +21,7 @@ const FilterArtist = () => {
   return [
     { value: 'name', label: 'Nombre', type: 'text' },
     { value: 'urlYoutube', label: 'URL', type: 'text' },
-    { value: 'countrie', label: 'País', type: 'select', options: countrieOptions },
+    { value: 'countrie', label: 'País', type: 'autotoggle', options: countrieOptions },
     { value: 'genere', label: 'Generos', type: 'select', options: genere }
   ]
 }
