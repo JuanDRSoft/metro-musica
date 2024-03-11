@@ -14,8 +14,17 @@ const DynamicFilter = ({ data, options, setFilter, filter }) => {
 
     const datosFiltrados = data.filter((item) => {
       for (let key in state) {
-        if (!item[key].toLowerCase().includes(state[key].toLowerCase())) {
-          return false
+        if (Array.isArray(item[key])) {
+          const arrayIncludesValue = item[key].some((value) =>
+            value.toLowerCase().includes(state[key].toLowerCase())
+          )
+          if (!arrayIncludesValue) {
+            return false
+          }
+        } else {
+          if (!item[key].toLowerCase().includes(state[key].toLowerCase())) {
+            return false
+          }
         }
       }
       return true

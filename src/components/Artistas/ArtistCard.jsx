@@ -50,10 +50,12 @@ const ArtistCard = ({ data }) => {
         </div>
 
         <div className="w-full">
-          <p>
+          <div className="flex items-center gap-2">
             <i class="fas fa-music mr-1 text-blue-500"></i>
-            {genere}
-          </p>
+            {genere.map((e) => (
+              <div className="bg-blue-50 rounded-xl px-2">{e}</div>
+            ))}
+          </div>
         </div>
 
         <div className="w-full">
