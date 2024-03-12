@@ -37,9 +37,9 @@ const ModalMetrics = ({ isOpen, closeModal, metrics }) => {
                     {'Metricas'}
                   </Dialog.Title>
 
-                  <div>Suscriptores: {metrics.subscriberCount}</div>
-                  <div>Numero de Videos: {metrics.videoCount}</div>
-                  <div>Numero de Vistas: {metrics.viewCount}</div>
+                  <div>Suscriptores: {metrics?.subscriberCount}</div>
+                  <div>Numero de Videos: {metrics?.videoCount}</div>
+                  <div>Numero de Vistas: {metrics?.viewCount}</div>
                 </Dialog.Panel>
               </Transition.Child>
             </div>
