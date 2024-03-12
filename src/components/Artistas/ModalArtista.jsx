@@ -33,7 +33,7 @@ const ModalArtista = ({ data, openModal1, setOpenModal }) => {
     if (urlYoutube) {
       const username = extractUsernameFromUrl(urlYoutube)
       const id = extractId(urlYoutube)
-      const apiKey = 'AIzaSyC7XUuqDaZaEVzTQt1D3A9d0VBjdSVZSd4'
+      const apiKey = 'AIzaSyAL-JNlaDEXgr3k1V2uie53EToCZHJa_4c'
 
       if (username) {
         const fetchData = async () => {

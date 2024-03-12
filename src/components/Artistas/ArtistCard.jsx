@@ -87,7 +87,12 @@ const ArtistCard = ({ data }) => {
       </div>
 
       <ModalArtista data={data} openModal1={openModal} setOpenModal={setOpenModal} />
-      <ModalMetrics isOpen={openModalMetrics} closeModal={toggleOpenMetrics} metrics={metrics} />
+      <ModalMetrics
+        isOpen={openModalMetrics}
+        closeModal={toggleOpenMetrics}
+        metrics={metrics}
+        name={name}
+      />
     </div>
   )
 }
