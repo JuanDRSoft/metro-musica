@@ -1,7 +1,7 @@
 import { Dialog, Transition } from '@headlessui/react'
 import React, { Fragment } from 'react'
 
-const ModalMetrics = ({ isOpen, closeModal }) => {
+const ModalMetrics = ({ isOpen, closeModal, metrics }) => {
   return (
     <>
       <Transition appear show={isOpen} as={Fragment}>
@@ -36,6 +36,10 @@ const ModalMetrics = ({ isOpen, closeModal }) => {
                   >
                     {'Metricas'}
                   </Dialog.Title>
+
+                  <div>Suscriptores: {metrics.subscriberCount}</div>
+                  <div>Numero de Videos: {metrics.videoCount}</div>
+                  <div>Numero de Vistas: {metrics.viewCount}</div>
                 </Dialog.Panel>
               </Transition.Child>
             </div>

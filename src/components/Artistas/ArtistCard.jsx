@@ -8,7 +8,7 @@ const ArtistCard = ({ data }) => {
   const [openModal, setOpenModal] = useState(false)
   const [openModalMetrics, setOpenModalMetrics] = useState(false)
 
-  const { name, genere, urlSpotify, urlYoutube, countrie, image, chanelImage } = data
+  const { name, genere, urlSpotify, urlYoutube, countrie, image, chanelImage, metrics } = data
   const { deleteArtist } = useAuth()
 
   const edit = () => {
@@ -87,7 +87,7 @@ const ArtistCard = ({ data }) => {
       </div>
 
       <ModalArtista data={data} openModal1={openModal} setOpenModal={setOpenModal} />
-      <ModalMetrics isOpen={openModalMetrics} closeModal={toggleOpenMetrics} />
+      <ModalMetrics isOpen={openModalMetrics} closeModal={toggleOpenMetrics} metrics={metrics} />
     </div>
   )
 }
