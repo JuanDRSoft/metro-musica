@@ -44,7 +44,7 @@ const ModalMetrics = ({ isOpen, closeModal, metrics, name }) => {
                     <p className="w-full text-center">Fecha</p>
                   </div>
 
-                  {metrics.length > 0 &&
+                  {metrics?.length > 0 &&
                     metrics.map((e) => {
                       if (e.date) {
                         const fechaTimestamp = e.date.toDate() // Convertir la marca de tiempo de Firestore a objeto Date
